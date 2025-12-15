@@ -83,5 +83,6 @@ Stores them in FAISS
 python manage.py migrate
 python manage.py runserver
 ```
-
+UI Reference:
+<img width="2928" height="1476" alt="image" src="https://github.com/user-attachments/assets/79ce7cbb-e260-4ee6-bbab-4de4064721c1" />
 
