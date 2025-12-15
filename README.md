@@ -37,3 +37,51 @@ using **Wikipedia as the knowledge source**.
 ```bash
 git clone https://github.com/shreesi/wiki-ai-rag.git
 cd wiki-ai-rag
+```
+### 2️⃣ Install Dependencies
+``` bash
+pip install -r requirements.txt
+```
+This installs Django, FAISS, Sentence-Transformers, Wikipedia API, and other required libraries.
+
+### 3️⃣ Install Ollama (LLaMA Runtime)
+Download Ollama from the official website:
+👉 https://ollama.com/download
+
+Verify installation:
+```bash
+ollama --version
+```
+Start the Ollama server (keep this terminal running):
+```bash
+ollama serve
+```
+
+### 4️⃣ Download LLaMA Model
+```push
+ollama pull llama3.1:8b
+```
+
+### 5️⃣ Ingest Wikipedia Data (One-Time Setup)
+```bash
+python ingest_wikipedia.py
+```
+This step:
+
+Downloads AI-related Wikipedia pages
+
+Splits text into chunks
+
+Generates embeddings
+
+Stores them in FAISS
+
+⚠️ This step is required only once.
+
+### 6️⃣ Run Django Server
+```bash
+python manage.py migrate
+python manage.py runserver
+```
+
+
