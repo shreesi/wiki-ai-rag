@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Wikipedia Assistant</title>
+
+    <div style="
+    background: #eef6ff;
+    border-left: 4px solid #3b82f6;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    ">
+        🧠 <b>Memory:</b>
+        <span title="To avoid hallucination and keep answers accurate, only the last two chats are remembered.">
+            Last 2 chats only
+        </span>
+    </div>
+
+
+    {% if memory_used %}
+    <div style="color: #16a34a; font-size: 13px; margin-bottom: 10px;">
+        ✅ Using last 2 chats as memory for this response
+    </div>
+    {% endif %}
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 40px;
+            background: #f7f7f7;
+        }
+
+        .chat-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .user {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .assistant {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .sources {
+            font-size: 0.9em;
+            color: #555;
+            margin-left: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 70px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+        }
+
+        #spinner {
+            display: none;
+            margin-top: 15px;
+            color: #555;
+        }
+    </style>
+
+    <script>
+        function showSpinner() {
+            document.getElementById("spinner").style.display = "block";
+        }
+    </script>
+</head>
+
+<body>
+
+<h2>🤖 AI / ML Wikipedia Assistant</h2>
+
+<div class="chat-box">
+    {% for item in chat %}
+        <div class="user">🧑 You:</div>
+        <div>{{ item.question }}</div>
+
+        <div class="assistant">🤖 Answer:</div>
+        <div class="assistant">{{ item.answer }}</div>
+
+        <div class="sources">
+            <b>Sources:</b>
+            <ul>
+                {% for title, link in item.sources.items %}
+                    <li>
+                        <a href="{{ link }}" target="_blank">{{ title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <hr>
+    {% endfor %}
+</div>
+
+<form method="post" onsubmit="showSpinner()">
+    {% csrf_token %}
+
+    <textarea name="question" placeholder="Ask about AI, ML, GenAI..."></textarea>
+    <br>
+
+    <button type="submit">Ask</button>
+
+    <button
+        type="submit"
+        name="clear_chat"
+        style="margin-left: 10px; background-color: #e74c3c; color: white;"
+        onclick="return confirm('Clear entire chat?')"
+    >
+        Clear Chat
+    </button>
+</form>
+
+<div id="spinner">⏳ Thinking... please wait</div>
+
+</body>
+</html>
